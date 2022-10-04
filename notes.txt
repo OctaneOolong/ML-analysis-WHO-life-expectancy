@@ -1,0 +1,243 @@
+2953 rows, 22 columns.
+
+Question asks about 20 columns.
+
+Life expectancy is the predicted variable. 
+
+---
+https://www.youtube.com/watch?v=Lky_OGhKT4I&ab_channel=MachineLearning
+
+Classification metrics:
+- Accuracy good if all classes are balanced. 
+- Precision and Recall more important for imbalanced classes.
+- If false positive predictions are worse than false negatives, aim for higher precision.
+- If false negative predictions are worse than false possitives, aim for higher recall.
+- F1 is a combination of precision and recall.
+
+Regression metrics:
+- R^2 (coefficient of determination) 
+- MAE 
+- MSE
+
+R^2 is the default measure returned from `model.score(X,y)`.
+R^2 compares your model predictions to the means of the targets, values can range from negative infinity to 1. If the model predicts the mean, its R^2 value is 0, if it predicts the range of targets perfectly, it returns 1. 
+
+---
+Geron: 
+- RMSE measures errors in prediction, more weight for larger errors.
+- Preferred for regression tasks.
+- If there are many outliers, use MAE.
+- MAE, RMSE measure distance betwen two vectors - the predictions and target values. 
+- RMSE corresponds to the euclidian norm. 'l_2 norm', ||.||_2, or ||.||.
+- MAE corresponds to Manhattan norm, called l_1 norm, ||.||_1.
+- Higher the norm index, more it focuses on large errors, and neglects small ones, hence RMSE is more sensitive to outliers than MAE. (Should use MAE as the data is fuuuucked).
+- Validation sets are rendered obsolute by using CV. https://machinelearningmastery.com/difference-test-validation-datasets/
+
+---
+https://vitalflux.com/mean-square-error-r-squared-which-one-to-use/
+- Smaller MSE is better.
+- We square the mean of the error because it provides a measure of total loss, positive and negative. Dont use absolute because it doesnt provide a smooth function. 
+- MSE is the average sum of the squared difference between the actual value and the predicted or estimated value.
+- RMSE is the square root of the MSE.
+- R^2 is better than MSE as it can handle scaling.
+- recommended to use R-squared/adjusted R-squared. 
+
+---
+https://chartio.com/resources/tutorials/how-to-check-if-any-value-is-nan-in-a-pandas-dataframe/#:~:text=The%20official%20documentation%20for%20pandas,value%20is%20denoted%20by%20NaN%20.
+
+
+---
+# Working with Null values
+print(y_train.isnull().values.any())
+
+#print(round(train_data.isnull().sum()/len(train_data)*100, 2))
+
+---
+
+
+---
+20220614
+
+- Set up git repo.
+- write seperate pipes for each.. action. 
+    -  Instead, paramatize the pipe. 
+
+---
+https://people.duke.edu/~rnau/compare.htm
+
+more detail about comparing regression models.
+
+---
+https://www.youtube.com/watch?v=nuIqwnsrnH0&ab_channel=SebastianRaschka
+
+11.6 Nested CV for Algorithm Selection Code Example (L11 Model Eval. Part 4)
+
+- DT based classifiers dont need parameter scaling (does it matter?).
+- Pipeline(('std', standardScaler()),('clf',clf)) for each classifier, with the clf object instantiated earlier. 
+- define the param_grid dictionaries for each classifier. 
+- can use seperate dictionaries in the param_grid to compensate for different kernels in SVM etc. 
+- run RF with as many estimators as feasibly possible (1000 -> 10000).
+- Inner and outer loop.
+- CV_grid_search on each model, then compare each model through a higher level cv(?)
+- he saves the grid search into a dictionary.
+- builds a list of CV grid searches for each model. 
+- runs a CV in a loop, one for each algorithm.
+- the outer folds are done with StratifiedKFold
+ 
+ ---
+ https://towardsdatascience.com/pca-is-not-feature-selection-3344fb764ae6
+
+ dont use PCA on non-continuous data.
+
+1. remove the worst offenders. 
+2. split the set.
+3. preprocess.
+4. Train. 
+
+---
+cross validation of test set with pipes and cross_validate:
+
+1. instantiate a pipe object.
+2. train it on the train data.
+3. feed it to a CV with the test data.
+4. obtain the scores.
+
+---
+lin_reg_scores_df
+
+poly_reg_scores_df
+
+SVR_reg_scores_df
+
+tree_reg_scores_df
+
+RF_reg_scores_df
+
+xgb_reg_scores_df
+
+---
+https://towardsdatascience.com/my-6-part-powerful-eda-template-that-speaks-of-ultimate-skill-6bdde3c91431
+Experimental Data Analysis (EDA) 
+
+
+---
+https://medium.com/analytics-vidhya/normal-distribution-and-machine-learning-ec9d3ca05070#:~:text=In%20Machine%20Learning%2C%20data%20satisfying,a%20bivariate%20or%20multivariate%20normal.
+
+- Normal distributions are better for model training.
+
+---
+
+https://www.quora.com/In-feature-creation-should-I-start-combining-features-with-low-correlation-or-those-which-has-high-correlation-with-%E2%80%9Cy%E2%80%9D
+
+- combine features with high correlation because they are measuring the same thing.
+
+---
+attributes that need logarithm transformation:
+
+x signifies that they do become more normal with a logarithmic transformation. 
+
+- alcohol. x 
+- BMI. x 
+- Income composition of resources. x
+- thinness 1 - 19 years.
+- Adult Mortality. x 
+- Thinness 1 - 19 years.
+---
+Correlated attributes:
+- under-five deaths is perfectly correlated with infant daths. done.
+- GDP is almost completely correlated with percentage expenditure. done. 
+- Income composition of resources and schooling are strongly correlated.
+
+- thinness 1 - 19 very strongly correlated with thinness 5 - 9 years.
+
+
+---
+20220615
+There is a spike at zero for:
+- infant deaths.
+- Alcohol.
+- percentage expenditure.
+- Measules.
+- Under-Five deaths.
+- HIV/Aids
+- GDP.
+- Population.
+- Income composition of resources. 
+
+--- 
+The transofmraitons performed by preprocessing don't change the overall shape of the data noticibly. 
+
+---
+ICOR spike around zero belongs to:
+['Antigua and Barbuda' 'Bahamas' 'Bhutan' 'Bosnia and Herzegovina'
+ 'Burkina Faso' 'Cabo Verde' 'Chad' 'Comoros' 'Equatorial Guinea'
+ 'Eritrea' 'Ethiopia' 'Georgia' 'Grenada' 'Guinea-Bissau' 'Kiribati'
+ 'Lebanon' 'Madagascar' 'Micronesia (Federated States of)' 'Montenegro'
+ 'Nigeria' 'Oman' 'Saint Lucia' 'Saint Vincent and the Grenadines'
+ 'Seychelles' 'South Sudan' 'Suriname'
+ 'The former Yugoslav republic of Macedonia' 'Timor-Leste' 'Turkmenistan'
+ 'Uzbekistan' 'Vanuatu']
+
+Direct removal of these countries does not appear to affect other variable distributions perceptably. 
+
+---
+https://www.andrewvillazon.com/custom-scikit-learn-transformers/
+Custom Transformers
+
+- Transformers are a class
+- transformers inherit from BaseEstimator and TransformerMixin.
+- The class needs to implement fit() and transform().
+    - Both need X and y parameters.
+    - Transform needs to return a df or np.array to be compatible with Pipelines.
+
+---
+visualise pipeline:
+
+from sklearn import set_config
+set_config(display='diagram')
+pipeline
+---
+
+custom transformer:
+ Just needs to combine.. same as the adder. 
+
+ Custom transformer that:
+ 1. Adds a column called 'Hepatitis B', 'Diphtheria', 'Polio' that is the addition of the three.
+ 2. Remove ['Hepatitis B', 'Diphtheria', 'Polio']
+ 
+ ---
+ # principal component analysis
+
+from sklearn.decomposition import PCA
+
+pca = PCA()
+
+PCA_pipe = Pipeline([('prepro', num_pipeline), 
+                    ('pca', pca)])
+
+PCA_pipe.fit_transform(data.drop(['Status'], axis=1))
+cumsum = np.cumsum(PCA_pipe['pca'].explained_variance_ratio_)
+d = np.argmax(cumsum >= 0.95) + 1
+d
+
+cumsum.reshape(-1,1)
+X_new = np.linspace(1, len(cumsum), num = len(cumsum)).reshape(-1,1)
+
+plt.ylabel('Explained Variance')
+plt.xlabel('Number of Dimensions')
+
+plt.plot(X_new, cumsum, 'b-')
+
+plt.xticks(np.arange(1, len(cumsum)+1, 1.0))
+
+plt.show()
+
+---
+20220616
+
+randomly grid searching has resulted in an xgb with a wider range including a lower minimum error, but the same average. 
+
+Trying with default settings except more estimators:
+    - exactly the same behavior.
+
+
